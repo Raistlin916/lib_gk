@@ -1,6 +1,12 @@
-(function ( exports ) {
+(function ( exports, undefined ) {
 	var slice = Array.prototype.slice;
+	if( !window['$'] ){
+		var $ = function(s){
+			return document.querySelectorAll(s);
+		};
 
+		exports.$ = $;
+	}
 /*	function extend ( target ) {
 			if ( typeof target == 'function'){
 				var superClass = arguments[1],
