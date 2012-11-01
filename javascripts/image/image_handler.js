@@ -1,3 +1,4 @@
+"use strict";
 (function(exports, undefined){
 	var utils = exports.utils,
 		extend = utils.extend,
@@ -195,6 +196,9 @@
 				this.putOn( context );
 			}
 			
+			// 手动清空，不知道为啥没回收
+			past = undefined;
+
 			function _move( ox, oy ){
 				var x = t.x + ox,
 					y = t.y + oy;
@@ -269,10 +273,10 @@
 /*			Object.keys( this ).forEach(function(key){
 				s += Math.abs(targetPixel[key] - self[key]);
 			})*/
-			s += targetPixel.r - this.r;
-			s += targetPixel.g - this.g;
-			s += targetPixel.b - this.b;
-			s += targetPixel.a - this.a;
+			s += Math.abs(targetPixel.r - this.r);
+			s += Math.abs(targetPixel.g - this.g);
+			s += Math.abs(targetPixel.b - this.b);
+			s += Math.abs(targetPixel.a - this.a);
 			if( s <= range ){
 				return true;
 			} else {
