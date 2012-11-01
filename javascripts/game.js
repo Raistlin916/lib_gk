@@ -47,6 +47,7 @@
 					}
 					var self = this;
 					requestAnimFrame(function(now){
+						now || (now = +new Date);
 						var dt = (now - self.lastTime) ;
 						if (dt >= 3000){
 							dt = 250;
