@@ -1,7 +1,9 @@
 /*
   require utils.extend;
 
-  var range = new Range( document.body, { min: 5, max: 30, step: 5 } );
+  var range = new Range( document.body, { min: 20, max: 30, step: 5 });
+  range.set(25);
+  var r = range.getElement();
 */
 
 (function(exports){
@@ -53,13 +55,14 @@
       this.shower = shower;
       this.div = div;
       this.long = long;
+      this.wrapper = wrapper;
       wrapper.appendChild( shower );
       wrapper.appendChild( long );
       parent.appendChild( wrapper );
       
-      this.attachHandler( div, long, shower );
+      this.attachHandler( div, long, shower, wrapper );
     },
-    attachHandler: function( div, long, shower ){
+    attachHandler: function( div, long, shower, wrapper ){
       var isMousedown = false,
           self = this;
       
@@ -73,15 +76,15 @@
         if( isMousedown ){
           var x = _getX( e );
           if( x >= 0 && x <= long.offsetWidth ){
-            _format( x, long, div, shower );
+            _format( x, long, div, shower, wrapper );
           }
         }
       });
       long.addEventListener('click', function( e ){
-        _format( _getX(e), long, div, shower );
+        _format( _getX(e), long, div, shower, wrapper );
       });
       
-      function _format( x, long, div, shower ){
+      function _format( x, long, div, shower, wrapper ){
         var l = self.max - self.min;
         if( x >= long.offsetWidth ){
           x = long.offsetWidth;
@@ -89,7 +92,9 @@
           x -= x % parseInt( long.offsetWidth * self.step / l );
         }
         div.style.left = x + 'px';
-        shower.innerHTML = parseInt( self.min + x/long.offsetWidth*l);
+        var value = parseInt( self.min + x/long.offsetWidth*l);
+        shower.innerHTML = value;
+        wrapper.dataset.value = value;
       }
       
       function _getX( e ){
@@ -106,7 +111,11 @@
         var l = this.max - this.min;
         this.div.style.left = parseInt(this.long.offsetWidth / l * (p - this.min)) + 'px';
         this.shower.innerHTML = p;
+        this.wrapper.dataset.value = p;
       }
+    },
+    getElement: function(){
+      return this.wrapper;
     }
   }
   exports.Range = Range;
