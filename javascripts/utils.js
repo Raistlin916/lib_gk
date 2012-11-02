@@ -24,10 +24,15 @@
 			})
 			return target;
 		}*/
-	function extend( des, src ){
-		Object.keys(src).forEach(function(key){
-			des[key] = src[key];
-		})
+	function extend( target, src, isOverride ){
+		if( isOverride == undefined ){
+			isOverride = true;
+		}
+		for(var key in src){
+			if( isOverride || target[key] == undefined ){
+				target[key] = src[key]; 
+			}
+		}
 	}
 
 	var Event = function(){
