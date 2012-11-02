@@ -7,6 +7,8 @@
 */
 
 (function(exports){
+  var extend = utils.extend;
+
   function Range( parent, option ){
     
     extend( this, option );
@@ -58,7 +60,7 @@
       this.wrapper = wrapper;
       wrapper.appendChild( shower );
       wrapper.appendChild( long );
-      parent.appendChild( wrapper );
+      parent && parent.appendChild( wrapper );
       
       this.attachHandler( div, long, shower, wrapper );
     },
