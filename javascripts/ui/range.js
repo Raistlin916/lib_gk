@@ -1,0 +1,115 @@
+/*
+  require utils.extend;
+
+  var range = new Range( document.body, { min: 5, max: 30, step: 5 } );
+*/
+
+(function(exports){
+  function Range( parent, option ){
+    
+    extend( this, option );
+    var defaultOption = {
+                    value: 0,
+                    min: 0,
+                    max: 100,
+                    step: 1
+                  }
+    extend( this, defaultOption, false );
+    
+    this.value < this.min && (this.value = this.min);
+    this.value > this.max && (this.value = this.max);
+    this.init(parent);
+  }
+  Range.prototype = {
+    init: function(parent){
+      var wrapper = document.createElement('div');
+      wrapper.style.width = '32px';
+      
+      var long = document.createElement('div');
+      long.style.width = '30px';
+      long.style.height = '2px';
+      long.style.backgroundColor = 'grey';
+      long.style.display = 'block';
+      long.style.padding = '0';
+      long.style.margin = '0 0 3px 1px';
+      long.style.cursor = 'pointer';
+      
+      var div = document.createElement('div');
+      div.style.width = '2px';
+      div.style.height = '6px';
+      div.style.backgroundColor = 'skyblue';
+      div.style.position = 'relative';
+      div.style.top = '-2px';
+      div.style.cursor = 'pointer';
+      long.appendChild( div );
+      
+      
+      
+      var shower = document.createElement('span');
+      shower.style.fontSize = '9px';
+      shower.style.display = 'block';
+      shower.style.marginLeft = '2px';
+      shower.innerHTML = this.value;
+      this.shower = shower;
+      this.div = div;
+      this.long = long;
+      wrapper.appendChild( shower );
+      wrapper.appendChild( long );
+      parent.appendChild( wrapper );
+      
+      this.attachHandler( div, long, shower );
+    },
+    attachHandler: function( div, long, shower ){
+      var isMousedown = false,
+          self = this;
+      
+      div.addEventListener('mousedown', function(e){
+        isMousedown = true;
+      });      
+      window.addEventListener('mouseup', function(e){
+        isMousedown = false;
+      });
+      window.addEventListener('mousemove', function(e){
+        if( isMousedown ){
+          var x = _getX( e );
+          if( x >= 0 && x <= long.offsetWidth ){
+            _format( x, long, div, shower );
+          }
+        }
+      });
+      long.addEventListener('click', function( e ){
+        _format( _getX(e), long, div, shower );
+      });
+      
+      function _format( x, long, div, shower ){
+        var l = self.max - self.min;
+        if( x >= long.offsetWidth ){
+          x = long.offsetWidth;
+        } else {
+          x -= x % parseInt( long.offsetWidth * self.step / l );
+        }
+        div.style.left = x + 'px';
+        shower.innerHTML = parseInt( self.min + x/long.offsetWidth*l);
+      }
+      
+      function _getX( e ){
+        return e.pageX - long.offsetLeft;
+      }
+    },
+    get: function(){
+      return parseInt(this.shower.innerHTML);
+    },
+    set: function( p ){
+      if( p < this.min || p > this.max ){
+        this.shower.innerHTML = NaN;
+      } else {
+        var l = this.max - this.min;
+        this.div.style.left = parseInt(this.long.offsetWidth / l * (p - this.min)) + 'px';
+        this.shower.innerHTML = p;
+      }
+    }
+  }
+  exports.Range = Range;
+})(window);
+
+
