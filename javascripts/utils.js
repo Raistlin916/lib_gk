@@ -73,6 +73,9 @@
 	        this.__events[name] || (this.__events[name] = []);
 	        this.__events[name].push(cb);
 	    },
+	    on: function(){
+	    	this.bind.apply( this, arguments );
+	    },
 	    emit: function( name ) {
 	        var arr = this.__events[name],
 	        	argus = slice.call( arguments, 1 ),

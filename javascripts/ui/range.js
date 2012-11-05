@@ -7,10 +7,11 @@
 */
 
 (function(exports){
-  var extend = utils.extend;
+  var extend = utils.extend,
+      inherit = utils.inherit;
 
   function Range( parent, option ){
-    
+    this.Super.call(this);
     extend( this, option );
     var defaultOption = {
                     value: 0,
@@ -27,7 +28,8 @@
   Range.prototype = {
     init: function(parent){
       var wrapper = document.createElement('div');
-      wrapper.style.width = '32px';
+      wrapper.style.width = '34px';
+      wrapper.style.height = '18px';
       
       var long = document.createElement('div');
       long.style.width = '30px';
@@ -53,7 +55,6 @@
       shower.style.fontSize = '9px';
       shower.style.display = 'block';
       shower.style.marginLeft = '2px';
-      shower.innerHTML = this.value;
       this.shower = shower;
       this.div = div;
       this.long = long;
@@ -63,6 +64,7 @@
       parent && parent.appendChild( wrapper );
       
       this.attachHandler( div, long, shower, wrapper );
+      this.set( this.value );
     },
     attachHandler: function( div, long, shower, wrapper ){
       var isMousedown = false,
@@ -70,11 +72,14 @@
       
       div.addEventListener('mousedown', function(e){
         isMousedown = true;
-      });      
+      });   
       window.addEventListener('mouseup', function(e){
+        if( isMousedown ){
+          self.emit( 'change', self.get() );
+        }
         isMousedown = false;
       });
-      window.addEventListener('mousemove', function(e){
+      wrapper.addEventListener('mousemove', function(e){
         if( isMousedown ){
           var x = _getX( e );
           if( x >= 0 && x <= long.offsetWidth ){
@@ -95,7 +100,7 @@
         }
         div.style.left = x + 'px';
         var value = parseInt( self.min + x/long.offsetWidth*l);
-        shower.innerHTML = value;
+        self.set( value );
         wrapper.dataset.value = value;
       }
       
@@ -120,6 +125,7 @@
       return this.wrapper;
     }
   }
+  inherit( Range, utils.EventEmitter );
   exports.Range = Range;
 })(window);
 
