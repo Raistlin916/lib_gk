@@ -215,6 +215,9 @@
 			}
 		},
 		setSimilar: function( sx, sy, c, context, diff ){
+			if( typeof c == 'string' ){
+				c = Pixel.parse(c);
+			}
 			this.traverseSimilar( sx, sy, function( pixel, x, y ){
 					//pixel.prase( c );
 					if( c.r !== undefined ){
@@ -255,6 +258,15 @@
 		this.b = b;
 		this.a = a;
 	}
+	Pixel.parse = function( color ){
+		if( color.indexOf('#') === 0 ){
+			var r = parseInt(color.slice(1,3), 16),
+				g = parseInt(color.slice(3,5), 16),
+				b = parseInt(color.slice(5,7), 16),
+				a = 255;
+			return new Pixel( r, g, b, a );
+		}
+	};
 	Pixel.prototype = {
 		isValid: function(){
 			return ( this.r !== 0 ||
