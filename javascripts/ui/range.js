@@ -55,6 +55,7 @@
       shower.style.fontSize = '9px';
       shower.style.display = 'block';
       shower.style.marginLeft = '2px';
+      shower.style.webkitTextSizeAdjust = 'none';
       this.shower = shower;
       this.div = div;
       this.long = long;
