@@ -288,6 +288,14 @@
 		},
 		prase: function( target ){
 			extend(this, target);
+		},
+		getRGBA: function(){
+			var p = this;
+			return 'rgba('+p.r+','+p.g+','+p.b+','+p.a+')';
+		},
+		getRGB: function(){
+			var p = this;
+			return 'rgb('+p.r+','+p.g+','+p.b+')';
 		}
 	}
 
