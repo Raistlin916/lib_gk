@@ -399,7 +399,6 @@
 		this.Super.apply( this, arguments );
 		this.context = canvas.getContext('2d');
 		this.canvas = canvas;
-		this.initEventHandler();
 	}
 	CanvasHandler.prototype = {
 		drawImage: function( image ){
@@ -441,11 +440,14 @@
 		getCenter: function () {
 			return { x: parseInt(this.getWidth()/2), y: parseInt(this.getHeight()/2) }
 		},
-		initEventHandler: function(){
+		// 重写父类方法
+		bind: function( name, cb ){
 			var self = this;
-			this.canvas.addEventListener('click', function(e){
-								self.emit('click', e.offsetX, e.offsetY);
-							});
+			this._super.bind.apply( this, arguments );
+			this.canvas.addEventListener( name, function(e){
+							// 兼容要重写
+							self.emit( name, e.offsetX, e.offsetY );
+						});
 		}
 	}
 	inherit( CanvasHandler, EventEmitter );
