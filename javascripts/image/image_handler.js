@@ -296,6 +296,10 @@
 		getRGB: function(){
 			var p = this;
 			return 'rgb('+p.r+','+p.g+','+p.b+')';
+		},
+		get16: function(){
+			var p = this;
+			return '#'+p.r.toString(16)+p.g.toString(16)+p.b.toString(16);
 		}
 	}
 
