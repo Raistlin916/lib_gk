@@ -138,6 +138,7 @@
 				upperLeft = { x: rect.left, y: rect.top };
 				lowerRight = { x: rect.right, y: rect.bottom };
 			}
+
 			var rect = this.getRect( upperLeft, lowerRight ),
 				self = this,
 				result;
@@ -269,9 +270,9 @@
 	};
 	Pixel.prototype = {
 		isValid: function(){
-			return ( this.r !== 0 ||
+			return ( /*this.r !== 0 ||
 					this.g !== 0 ||
-					this.b !== 0 ||
+					this.b !== 0 ||*/
 					this.a !== 0 );
 		},
 		isSimilar: function( targetPixel, range ){
@@ -288,8 +289,8 @@
 			s += Math.abs(targetPixel.r - this.r);
 			s += Math.abs(targetPixel.g - this.g);
 			s += Math.abs(targetPixel.b - this.b);
-			s += Math.abs(targetPixel.a - this.a);
-			if( s <= range ){
+
+			if( targetPixel.isValid() && s <= range ){
 				return true;
 			} else {
 				return false;
@@ -297,9 +298,6 @@
 		},
 		copy: function(){
 			return new Pixel( this.r, this.g, this.b, this.a );
-		},
-		prase: function( target ){
-			extend(this, target);
 		},
 		getRGBA: function(){
 			var p = this;
@@ -484,4 +482,5 @@
 	exports.CanvasHandler = CanvasHandler;
 	exports.Rect = Rect;
 	exports.Grid = Grid;
+	exports.Pixel = Pixel;
 })(window)

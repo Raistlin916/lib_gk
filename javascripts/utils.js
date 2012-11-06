@@ -33,6 +33,7 @@
 				target[key] = src[key]; 
 			}
 		}
+		return target;
 	}
 
 	var Event = function(){
