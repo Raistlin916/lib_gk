@@ -310,8 +310,12 @@
 			return 'rgb('+p.r+','+p.g+','+p.b+')';
 		},
 		get16: function(){
-			var p = this;
-			return '#'+p.r.toString(16)+p.g.toString(16)+p.b.toString(16);
+			var p = this, _to16 = this._to16;
+			return '#'+ _to16( p.r )+ _to16( p.g ) + _to16( p.b );
+		},
+		_to16: function( n ){
+			var temp = n.toString(16);
+			return  temp.length < 2 ? '0' + temp : temp;
 		}
 	}
 
