@@ -4,8 +4,13 @@
 		var $ = function(s){
 			return document.querySelectorAll(s);
 		};
-
 		exports.$ = $;
+	}
+	if( !window['$$'] ){
+		var $$ = function(s){
+			return document.querySelector(s);
+		};
+		exports.$$ = $$;
 	}
 /*	function extend ( target ) {
 			if ( typeof target == 'function'){
