@@ -29,6 +29,15 @@
     	return r;
     }
 
+    function getClientTop( elem ){
+		var r = elem.offsetLeft, p = elem.offsetParent;
+		while( p != undefined ){
+			r += p.offsetTop;
+			p = p.offsetParent;
+		}
+    	return r;
+    }
+
 	function extend( target, src, isOverride ){
 		if( isOverride == undefined ){
 			isOverride = true;
@@ -143,6 +152,7 @@
 					EventEmitter: EventEmitter,
 					inherit: inherit,
 					extend: extend,
-					getClientLeft: getClientLeft
+					getClientLeft: getClientLeft,
+					getClientTop: getClientTop
 				};
 })(window)
