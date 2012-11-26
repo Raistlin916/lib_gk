@@ -12,12 +12,21 @@
 		};
 		exports.$$ = $$;
 	}
+	function _getComputedStyle( elem ){
+		if( window['getComputedStyle'] == undefined ){
+			return elem.currentStyle;
+		} else {
+			return getComputedStyle( elem, false );
+		}
+	}
 
 	function getClientLeft( elem ){
-      if( elem == document.body ){
-      	return 0;
-      }
-    	return elem.offsetLeft + getClientLeft( elem.parentElement );
+		var r = elem.offsetLeft, p = elem.offsetParent;
+		while( p != undefined ){
+			r += p.offsetLeft;
+			p = p.offsetParent;
+		}
+    	return r;
     }
 
 	function extend( target, src, isOverride ){
