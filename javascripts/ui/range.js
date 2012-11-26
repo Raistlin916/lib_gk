@@ -106,7 +106,7 @@
       }
       
       function _getX( e ){
-        return e.pageX - long.offsetLeft;
+        return e.pageX - utils.getClientLeft( long );
       }
     },
     get: function(){

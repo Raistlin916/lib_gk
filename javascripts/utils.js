@@ -12,23 +12,14 @@
 		};
 		exports.$$ = $$;
 	}
-/*	function extend ( target ) {
-			if ( typeof target == 'function'){
-				var superClass = arguments[1],
-					fn = function(){},
-					klass = extend( {} , target.prototype );
-				fn.prototype = superClass.prototype;
-				target.prototype = new fn;
-				target.prototype.super = superClass.prototype;
-				extend( target.prototype, klass );
-			}
-			slice.call(arguments, 1).forEach(function(source){
-				for (var key in source){
-					target[key] = source[key];
-				}
-			})
-			return target;
-		}*/
+
+	function getClientLeft( elem ){
+      if( elem == document.body ){
+      	return 0;
+      }
+    	return elem.offsetLeft + getClientLeft( elem.parentElement );
+    }
+
 	function extend( target, src, isOverride ){
 		if( isOverride == undefined ){
 			isOverride = true;
@@ -142,6 +133,7 @@
 					Event: Event,
 					EventEmitter: EventEmitter,
 					inherit: inherit,
-					extend: extend
+					extend: extend,
+					getClientLeft: getClientLeft
 				};
 })(window)
