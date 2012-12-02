@@ -145,6 +145,21 @@
 		}
 	}();
 
+	function toArray( target ){  // 单个转数组， 集合转数组
+		(target.length == undefined) && ( target = [target] );
+      	target = Array.prototype.slice.call(target);
+      	return target;
+	}
+
+	function strToDom( str ){
+		var callee = arguments.callee, i;
+		( callee._i == undefined ) 
+		&& ( callee._i = document.createElement('div'));
+		i = callee._i;
+		i.innerHTML = str;
+		return i.children;
+	}
+
 	exports.utils = { 
 					slice: slice,
 					Timing: Timing,
@@ -153,6 +168,8 @@
 					inherit: inherit,
 					extend: extend,
 					getClientLeft: getClientLeft,
-					getClientTop: getClientTop
+					getClientTop: getClientTop,
+					toArray: toArray,
+					strToDom: strToDom
 				};
 })(window)
