@@ -62,16 +62,17 @@
 
 				fr.onload = function(e){
 					data = e.target.result;
-					self.onload && self.onload.call(elem, {
-													data:data, 
-													name:file.name, 
-													type:file.type,
-													size:file.size
-												});
-						if( ++n < files.length ){
-							t();
-						} 
-					}
+					self.onload && self.onload.call(elem, 
+					{
+						data:data, 
+						name:file.name, 
+						type:file.type,
+						size:file.size
+					});
+					if( ++n < files.length ){
+						t();
+					} 
+				}
 		    };
 		    return loader;
 		}
